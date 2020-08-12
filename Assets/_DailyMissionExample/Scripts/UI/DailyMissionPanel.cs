@@ -1,18 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DailyMissionPanel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private DailyMissionSlot[] missionSlots;
+
+    [SerializeField]
+    private Text timerText;
+
+    private void InitialiseSlots()
     {
-        
+        for (int i = 0; i < missionSlots.Length; i++)
+        {
+            //missionSlots[i].Initialise();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        InitialiseSlots();
+    }
+
+    private void Update()
+    {
+        //timerText.text = 
+    }
+
+    public void DebugResetMissions()
+    {
+
     }
 }

@@ -24,7 +24,7 @@ namespace DailyMissions
         CraftItems
     }
 
-    [CreateAssetMenu(fileName = "Daily Mission", menuName = "Data Files/Daily Missions/Daily Mission")]
+    [CreateAssetMenu(fileName = "Daily Mission", menuName = "Data Files/Daily Missions/Daily Mission", order = 0)]
     public class DailyMission : ScriptableObject
     {
         [SerializeField]
@@ -34,11 +34,11 @@ namespace DailyMissions
         // public Difficulties Difficulty => difficulty;
 
         [SerializeField]
-        private MissionTypes missionType;
+        protected MissionTypes missionType;
         public MissionTypes MissionType { get { return missionType; } }
 
         [SerializeField]
-        private int goal;
+        private int goal = 1;
         public int Goal { get { return goal; } }
 
         [SerializeField, Tooltip("Player level must be equal to or higher than this number before it can be offered.")]
@@ -72,5 +72,10 @@ namespace DailyMissions
 
         private bool isCaimed;
         public bool IsClaimed { get { return IsClaimed; } }
+
+        public void Initialise(MissionTypes missionType)
+        {
+            this.missionType = missionType;
+        }
     }
 }

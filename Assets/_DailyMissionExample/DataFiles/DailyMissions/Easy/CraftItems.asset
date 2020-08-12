@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7a35aa26f8940c41bc4975d37bb5ce1, type: 3}
-  m_Name: SurviveForTime
+  m_Script: {fileID: 11500000, guid: 895096a146ea38341b0deb1c6acedec3, type: 3}
+  m_Name: CraftItems
   m_EditorClassIdentifier: 
   difficulty: 0
-  missionType: 7
-  goal: 5
+  missionType: 8
+  goal: 0
   levelRequirement: 0
   groupID: 0
-  description: Survive - do not die!
+  description: 
   icon: {fileID: 0}

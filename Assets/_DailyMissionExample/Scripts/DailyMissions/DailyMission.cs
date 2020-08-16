@@ -66,7 +66,7 @@ namespace DailyMissions
         public Sprite Icon { get { return icon; } }
 
         private int progress;
-        public int Progress { get { return progress; } }
+        public int Progress { get { return progress; } set { progress = value; } }
 
         public bool IsComplete { get { return progress >= goal; } }
 
@@ -79,6 +79,20 @@ namespace DailyMissions
 
         private bool isClaimed;
         public bool IsClaimed { get { return isClaimed; } }
+
+        public Dictionary<string, object> GetSaveData()
+        {
+            return new Dictionary<string, object>()
+            {
+                { "Difficulty", difficulty.ToString() },
+                { "MissionType", missionType.ToString() },
+                { "MissionGoal", goal },
+                { "Progress", progress },
+                { "RewardType", rewardType },
+                { "RewardAmount", rewardAmount },
+                { "IsClaimed", isClaimed }
+            };
+        }
 
         public void Initialise()
         {
@@ -96,6 +110,15 @@ namespace DailyMissions
             this.rewardAmount = rewardAmount;
             this.rewardType = rewardType;
             Initialise();
+        }
+
+        public void Initialise(int goal, int progress, int rewardAmount, string rewardType, bool isClaimed)
+        {
+            this.goal = goal;
+            this.progress = progress;
+            this.rewardAmount = rewardAmount;
+            this.rewardType = rewardType;
+            this.isClaimed = isClaimed;
         }
     }
 }

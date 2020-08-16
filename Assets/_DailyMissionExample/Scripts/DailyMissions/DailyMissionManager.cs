@@ -22,6 +22,11 @@ namespace DailyMissions
         private string[] currentMissionsPrefs;
         private const string currentMissionsPrefsKey = "DailyMissions/Missions{0}";
 
+        private string GetCurrentMissionsPrefKey(int index)
+        {
+            return string.Format(currentMissionsPrefsKey, index);
+        }
+
         private DateTime nextResetTime;
         public DateTime NextResetTime
         {
@@ -66,10 +71,11 @@ namespace DailyMissions
 
             for (int i = 0; i < currentMissionsPrefs.Length; i++)
             {
-                currentMissionsPrefs[i] = string.Format(currentMissionsPrefsKey, i);
+                currentMissionsPrefs[i] = GetCurrentMissionsPrefKey(i);
             }
 
             InitializeNextResetTime();
+            LoadFromPrefs();
         }
 
         private void Start()
@@ -97,8 +103,12 @@ namespace DailyMissions
 
             for (int i = 0; i < Enum.GetNames(typeof(Difficulties)).Length; i++)
             {
+                currentMissions[i] = NewDailyMission((Difficulties)i);
 
+                SavePref(GetCurrentMissionsPrefKey(i), JsonUtility.ToJson(currentMissions[i].GetSaveData()));
             }
+
+            OnDailyMissionsAssigned?.Invoke();
         }
 
         /// <summary>
@@ -158,6 +168,87 @@ namespace DailyMissions
         {
             PlayerPrefs.SetString(key, value);
             PlayerPrefs.Save();
+        }
+
+        private void LoadFromPrefs()
+        {
+            for (int i = 0; i < currentMissions.Length; i++)
+            {
+                if (!string.IsNullOrEmpty(GetCurrentMissionsPrefKey(i)))
+                {
+                    var savedMission = JsonUtility.FromJson<Dictionary<string, object>>(GetCurrentMissionsPrefKey(i));
+
+                    Difficulties difficulty;
+                    Enum.TryParse(savedMission["Difficulty"].ToString(), out difficulty);
+
+                    switch(difficulty)
+                    {
+                        case Difficulties.Easy:
+                            LoadMission(ref currentMissions[i], easyMissions, savedMission);
+                            break;
+
+                        case Difficulties.Medium:
+                            LoadMission(ref currentMissions[i], mediumMissions, savedMission);
+                            break;
+
+                        case Difficulties.Hard:
+                            LoadMission(ref currentMissions[i], hardMissions, savedMission);
+                            break;
+                    }
+                }
+            }
+        }
+
+        private void LoadMission(ref DailyMission currentMission, DailyMission[] dailyMissions, Dictionary<string, object> savedMission)
+        {
+            MissionTypes missionType;
+            Enum.TryParse(savedMission["MissionType"].ToString(), out missionType);
+
+            foreach(var dailyMission in dailyMissions)
+            {
+                if (dailyMission.MissionType == missionType)
+                {
+                    currentMission = Instantiate(dailyMission);
+                    currentMission.Initialise
+                        (
+                            Convert.ToInt32(savedMission["Goal"]),
+                            Convert.ToInt32(savedMission["Progress"]),
+                            Convert.ToInt32(savedMission["RewardAmount"]),
+                            savedMission["RewardType"].ToString(),
+                            Convert.ToBoolean(savedMission["IsClaimed"])
+                        );
+
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the current mission at the index.
+        /// </summary>
+        public DailyMission DailyMission(int index)
+        {
+            return currentMissions[index];
+        }
+
+        public void TriggerProgress(MissionTypes missionType, int progress = 1)
+        {
+            for (int i = 0; i < currentMissions.Length; i++)
+            {
+                if (currentMissions[i].MissionType == missionType)
+                {
+                    // Don't save or increase progress if the mission is already complete.
+                    if (currentMissions[i].IsComplete)
+                        break;
+
+                    int newProgress = Mathf.Clamp(currentMissions[i].Progress + progress, 0, currentMissions[i].Goal);
+                    currentMissions[i].Progress = newProgress;
+
+                    SavePref(GetCurrentMissionsPrefKey(i), JsonUtility.ToJson(currentMissions[i].GetSaveData()));
+                }
+            }
+
+            OnDailyMissionsProgress?.Invoke();
         }
     }
 }

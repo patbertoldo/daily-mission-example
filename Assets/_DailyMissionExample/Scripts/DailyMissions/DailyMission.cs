@@ -86,11 +86,11 @@ namespace DailyMissions
             {
                 { "Difficulty", difficulty.ToString() },
                 { "MissionType", missionType.ToString() },
-                { "MissionGoal", goal },
-                { "Progress", progress },
+                { "Goal", goal.ToString() },
+                { "Progress", progress.ToString() },
                 { "RewardType", rewardType },
-                { "RewardAmount", rewardAmount },
-                { "IsClaimed", isClaimed }
+                { "RewardAmount", rewardAmount.ToString() },
+                { "IsClaimed", isClaimed.ToString() }
             };
         }
 

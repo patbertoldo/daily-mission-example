@@ -810,6 +810,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: MissionSlot1
       objectReference: {fileID: 0}
+    - target: {fileID: 4972173030574448712, guid: d85c89091497b9848821a74ee65221a7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972173030574448712, guid: d85c89091497b9848821a74ee65221a7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d85c89091497b9848821a74ee65221a7, type: 3}
 --- !u!224 &8798254781214895186 stripped
@@ -947,6 +957,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: MissionSlot2
       objectReference: {fileID: 0}
+    - target: {fileID: 4972173030574448712, guid: d85c89091497b9848821a74ee65221a7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972173030574448712, guid: d85c89091497b9848821a74ee65221a7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d85c89091497b9848821a74ee65221a7, type: 3}
 --- !u!224 &8798254780555780015 stripped
@@ -1083,6 +1103,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MissionSlot0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972173030574448712, guid: d85c89091497b9848821a74ee65221a7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d85c89091497b9848821a74ee65221a7, type: 3}

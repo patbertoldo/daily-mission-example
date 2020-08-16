@@ -252,7 +252,7 @@ MonoBehaviour:
   progressText: {fileID: 3902420809528823514}
   progressBarParent: {fileID: 1597038176711133546}
   progressBar: {fileID: 2621188979105719319}
-  claimButton: {fileID: 0}
+  claimButton: {fileID: 4972173030574448712}
 --- !u!1 &2178160987659126690
 GameObject:
   m_ObjectHideFlags: 0

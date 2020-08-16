@@ -34,12 +34,12 @@ public class DailyMissionSlot : MonoBehaviour
     {
         this.slotIndex = slotIndex;
 
-        titleText.text = $"Mission {slotIndex}";
+        titleText.text = $"Mission {slotIndex + 1}";
         descriptionText.text = dailyMission.Description;
         icon.sprite = dailyMission.Icon;
 
         progressText.text = string.Format("{0}/{1}", dailyMission.Progress, dailyMission.Goal);
-        progressBar.sizeDelta = new Vector2(ConvertRange(dailyMission.Progress, 0, dailyMission.Goal, progressBarMinFill, progressBarParent.sizeDelta.x), progressBarParent.sizeDelta.y);
+        progressBar.sizeDelta = new Vector2(ConvertRange(dailyMission.Progress, 0, dailyMission.Goal, progressBarMinFill, progressBarParent.sizeDelta.x), progressBar.sizeDelta.y);
 
         rewardText.text = string.Format("{0}\n{1}", dailyMission.RewardAmount, dailyMission.RewardType);
 
@@ -49,9 +49,9 @@ public class DailyMissionSlot : MonoBehaviour
     /// <summary>
     /// UI Event.
     /// </summary>
-    public void Claim()
+    public void Claim(int index)
     {
-
+        DailyMissionManager.Instance.ClaimMission(index);
     }
 
     /// <summary>

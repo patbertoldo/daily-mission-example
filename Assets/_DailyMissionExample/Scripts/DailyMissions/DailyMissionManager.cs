@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using fastJSON;
 
 namespace DailyMissions
 {
@@ -52,6 +53,7 @@ namespace DailyMissions
         private int[] hardRewardRange;
 
         public Action OnDailyMissionsAssigned;
+        public Action OnDailyMissionsLoaded;
         public Action OnDailyMissionsProgress;
 
         private void Awake()
@@ -105,7 +107,8 @@ namespace DailyMissions
             {
                 currentMissions[i] = NewDailyMission((Difficulties)i);
 
-                SavePref(GetCurrentMissionsPrefKey(i), JsonUtility.ToJson(currentMissions[i].GetSaveData()));
+                SavePref(GetCurrentMissionsPrefKey(i), JSON.ToJSON(currentMissions[i].GetSaveData()));
+                //Debug.Log(JSON.ToNiceJSON(currentMissions[i].GetSaveData()));
             }
 
             OnDailyMissionsAssigned?.Invoke();
@@ -174,9 +177,14 @@ namespace DailyMissions
         {
             for (int i = 0; i < currentMissions.Length; i++)
             {
-                if (!string.IsNullOrEmpty(GetCurrentMissionsPrefKey(i)))
+                string currentMissionPref = PlayerPrefs.GetString(GetCurrentMissionsPrefKey(i));
+                if (!string.IsNullOrEmpty(currentMissionPref))
                 {
-                    var savedMission = JsonUtility.FromJson<Dictionary<string, object>>(GetCurrentMissionsPrefKey(i));
+                    var savedMission = JSON.ToObject<Dictionary<string, object>>(currentMissionPref);
+
+                    // JSON did not load correctly.
+                    if (savedMission.Count == 0)
+                        return;
 
                     Difficulties difficulty;
                     Enum.TryParse(savedMission["Difficulty"].ToString(), out difficulty);
@@ -197,6 +205,8 @@ namespace DailyMissions
                     }
                 }
             }
+
+            OnDailyMissionsLoaded?.Invoke();
         }
 
         private void LoadMission(ref DailyMission currentMission, DailyMission[] dailyMissions, Dictionary<string, object> savedMission)
@@ -244,7 +254,7 @@ namespace DailyMissions
                     int newProgress = Mathf.Clamp(currentMissions[i].Progress + progress, 0, currentMissions[i].Goal);
                     currentMissions[i].Progress = newProgress;
 
-                    SavePref(GetCurrentMissionsPrefKey(i), JsonUtility.ToJson(currentMissions[i].GetSaveData()));
+                    SavePref(GetCurrentMissionsPrefKey(i), JSON.ToJSON(currentMissions[i].GetSaveData()));
                 }
             }
 
@@ -254,7 +264,7 @@ namespace DailyMissions
         public void ClaimMission(int index)
         {
             currentMissions[index].IsClaimed = true;
-            SavePref(GetCurrentMissionsPrefKey(index), JsonUtility.ToJson(currentMissions[index].GetSaveData()));
+            SavePref(GetCurrentMissionsPrefKey(index), JSON.ToJSON(currentMissions[index].GetSaveData()));
 
             OnDailyMissionsProgress?.Invoke();
         }

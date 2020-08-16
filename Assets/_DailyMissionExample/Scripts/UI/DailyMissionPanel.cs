@@ -22,9 +22,10 @@ public class DailyMissionPanel : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        InitialiseSlots();
+        DailyMissionManager.Instance.OnDailyMissionsAssigned += InitialiseSlots;
+        DailyMissionManager.Instance.OnDailyMissionsLoaded += InitialiseSlots;
     }
 
     private void Update()

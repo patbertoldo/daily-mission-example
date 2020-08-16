@@ -70,12 +70,32 @@ namespace DailyMissions
 
         public bool IsComplete { get { return progress >= goal; } }
 
-        private bool isCaimed;
-        public bool IsClaimed { get { return IsClaimed; } }
+        // Making these basic for the simplicity of the example, rewards should have their own dedicated system.
+        private int rewardAmount;
+        public int RewardAmount { get { return rewardAmount; } }
+
+        private string rewardType;
+        public string RewardType { get { return rewardType; } }
+
+        private bool isClaimed;
+        public bool IsClaimed { get { return isClaimed; } }
+
+        public void Initialise()
+        {
+            isClaimed = false;
+        }
 
         public void Initialise(MissionTypes missionType)
         {
             this.missionType = missionType;
+            Initialise();
+        }
+
+        public void Initialise(int rewardAmount, string rewardType)
+        {
+            this.rewardAmount = rewardAmount;
+            this.rewardType = rewardType;
+            Initialise();
         }
     }
 }

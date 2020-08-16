@@ -39,7 +39,9 @@ public class DailyMissionSlot : MonoBehaviour
         icon.sprite = dailyMission.Icon;
 
         progressText.text = string.Format("{0}/{1}", dailyMission.Progress, dailyMission.Goal);
-        progressBar.sizeDelta = new Vector2(); // Make a range converter.
+        progressBar.sizeDelta = new Vector2(ConvertRange(dailyMission.Progress, 0, dailyMission.Goal, progressBarMinFill, progressBarParent.sizeDelta.x), progressBarParent.sizeDelta.y);
+
+        rewardText.text = string.Format("{0}\n{1}", dailyMission.RewardAmount, dailyMission.RewardType);
 
         claimButton.interactable = dailyMission.IsComplete;
     }
@@ -50,5 +52,20 @@ public class DailyMissionSlot : MonoBehaviour
     public void Claim()
     {
 
+    }
+
+    /// <summary>
+    /// Performs a range conversion to change a value from one range to another.
+    /// </summary>
+    private float ConvertRange(float previousValue, float previousMin, float previousMax, float newMin, float newMax)
+    {
+        float previousRange = previousMax - previousMin;
+
+        if (System.Math.Abs(previousRange) < Mathf.Epsilon)
+            return newMin;
+
+        float newRange = newMax - newMin;
+        float newValue = (((previousValue - previousMin) * newRange) / previousRange) + newMin;
+        return newValue;
     }
 }

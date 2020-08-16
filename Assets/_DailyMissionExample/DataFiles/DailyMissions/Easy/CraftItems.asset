@@ -17,5 +17,5 @@ MonoBehaviour:
   goal: 3
   levelRequirement: 0
   groupID: 0
-  description: 
+  description: Craft items from the workbench
   icon: {fileID: 0}

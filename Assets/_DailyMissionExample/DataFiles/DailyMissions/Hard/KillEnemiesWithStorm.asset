@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficulty: 0
   missionType: 0
-  goal: 5
+  goal: 10
   levelRequirement: 0
   groupID: 0
   description: Finish enemies with the Storm spell

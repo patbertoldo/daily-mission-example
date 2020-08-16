@@ -17,5 +17,5 @@ MonoBehaviour:
   goal: 30
   levelRequirement: 0
   groupID: 0
-  description: Kill enemies with the Fireball spell
+  description: Finish enemies with the Fireball spell
   icon: {fileID: 0}

@@ -250,5 +250,21 @@ namespace DailyMissions
 
             OnDailyMissionsProgress?.Invoke();
         }
+
+        public void ClaimMission(int index)
+        {
+            currentMissions[index].IsClaimed = true;
+            SavePref(GetCurrentMissionsPrefKey(index), JsonUtility.ToJson(currentMissions[index].GetSaveData()));
+
+            OnDailyMissionsProgress?.Invoke();
+        }
+
+        /// <summary>
+        /// UI Event.
+        /// </summary>
+        public void DebugAssignNewMissions()
+        {
+            AssignNewDailyMissions();
+        }
     }
 }

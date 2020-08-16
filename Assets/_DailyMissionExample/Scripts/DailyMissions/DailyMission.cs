@@ -78,7 +78,7 @@ namespace DailyMissions
         public string RewardType { get { return rewardType; } }
 
         private bool isClaimed;
-        public bool IsClaimed { get { return isClaimed; } }
+        public bool IsClaimed { get { return isClaimed; } set { isClaimed = value; } }
 
         public Dictionary<string, object> GetSaveData()
         {
